@@ -8,10 +8,12 @@ export async function lookupVin(vin) {
   return res.json();
 }
 
-export async function getPartsByVehicle(vehicleId, page = 1, pageSize = 48) {
-  const res = await fetch(
-    `${BASE_URL}/api/parts/by-vehicle/${vehicleId}?page=${page}&pageSize=${pageSize}`
-  );
+export async function getPartsByVehicle(vehicleId, page = 1, pageSize = 48, search = '', group = '') {
+  const params = new URLSearchParams({ page, pageSize });
+  if (search && search.trim()) params.append('search', search.trim());
+  if (group && group.trim()) params.append('group', group.trim());
+
+  const res = await fetch(`${BASE_URL}/api/parts/by-vehicle/${vehicleId}?${params.toString()}`);
   if (!res.ok) {
     throw new Error(`Parts fetch failed: ${res.status}`);
   }

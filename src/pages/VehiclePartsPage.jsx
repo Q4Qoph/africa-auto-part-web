@@ -10,28 +10,29 @@ export default function VehiclePartsPage() {
   const [error, setError] = useState(null);
   const [activeDiagram, setActiveDiagram] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  // Debounce search input by 300ms
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+      setPage(1); // Reset to page 1 on new search query
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    getPartsByVehicle(vehicleId, page)
+    getPartsByVehicle(vehicleId, page, 48, debouncedSearch)
       .then(setData)
       .catch(() => setError('Could not load parts for this vehicle.'))
       .finally(() => setLoading(false));
-  }, [vehicleId, page]);
+  }, [vehicleId, page, debouncedSearch]);
 
   const vehicle = data?.vehicle;
   const parts = data?.data || [];
-
-  const filteredParts = searchTerm.trim()
-    ? parts.filter(
-        (p) =>
-          (p.partNumber && p.partNumber.toLowerCase().includes(searchTerm.toLowerCase())) ||
-          (p.partName && p.partName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-          (p.groupName && p.groupName.toLowerCase().includes(searchTerm.toLowerCase()))
-      )
-    : parts;
 
   function openDiagram(part) {
     if (!part.picId || !vehicle?.vin) return;
@@ -132,18 +133,18 @@ export default function VehiclePartsPage() {
             }}
           >
             <div style={{ color: '#475569', fontSize: 14 }}>
-              Showing <strong>{filteredParts.length}</strong> of <strong>{data.totalCount}</strong> parts (Page {data.page} of {data.totalPages})
+              Showing <strong>{parts.length}</strong> of <strong>{data.totalCount}</strong> parts (Page {data.page} of {data.totalPages || 1})
             </div>
             <input
               type="text"
-              placeholder="Filter by part number, name, or group..."
+              placeholder="Search by part number, name, or group across all pages..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
                 padding: '8px 12px',
                 borderRadius: 6,
                 border: '1px solid #cbd5e1',
-                width: 320,
+                width: 380,
                 fontSize: 14,
               }}
             />
@@ -163,7 +164,7 @@ export default function VehiclePartsPage() {
                 </tr>
               </thead>
               <tbody>
-                {filteredParts.map((part, i) => (
+                {parts.map((part, i) => (
                   <tr key={i} style={{ borderBottom: '1px solid #f1f5f9', transition: 'background 0.15s' }}>
                     <td style={{ padding: '12px 14px', fontFamily: 'monospace', fontWeight: 600, color: '#0f172a' }}>
                       {part.partNumber || <span style={{ color: '#94a3b8' }}>—</span>}
