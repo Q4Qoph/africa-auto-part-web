@@ -188,7 +188,8 @@ export default function VinSearchPage() {
                 {result.make} — {result.modelDescription || result.model}
               </h2>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '12px 0 16px', fontSize: 13 }}>
-                {result.modelYear && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Year: <strong style={{ color: 'var(--text-secondary)' }}>{result.modelYear}</strong></span>}
+                {result.decodedVehicleYear && <span style={{ background: 'rgba(34, 197, 94, 0.15)', color: '#22c55e', padding: '4px 8px', borderRadius: 6, border: '1px solid rgba(34, 197, 94, 0.3)', fontWeight: 600 }}>Vehicle Year: {result.decodedVehicleYear}</span>}
+                {result.generationCoverage && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Catalog Coverage: <strong style={{ color: 'var(--text-secondary)' }}>{result.generationCoverage}</strong></span>}
                 {result.engine && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
                 {result.transmission && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{result.transmission}</strong></span>}
                 {result.steering && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Drive: <strong style={{ color: 'var(--text-secondary)' }}>{result.steering}</strong></span>}
@@ -239,7 +240,8 @@ export default function VinSearchPage() {
                 {result.make} — {result.modelDescription || result.model}
               </h2>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '12px 0 16px', fontSize: 13 }}>
-                {result.modelYear && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Generation/Year: <strong style={{ color: 'var(--text-secondary)' }}>{result.modelYear}</strong></span>}
+                {result.decodedVehicleYear && <span style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8', padding: '4px 8px', borderRadius: 6, border: '1px solid rgba(56, 189, 248, 0.3)', fontWeight: 600 }}>Vehicle Year: {result.decodedVehicleYear}</span>}
+                {result.generationCoverage && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Catalog Coverage: <strong style={{ color: 'var(--text-secondary)' }}>{result.generationCoverage}</strong></span>}
                 {result.engine && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
                 {result.transmission && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{result.transmission}</strong></span>}
                 {result.steering && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Drive: <strong style={{ color: 'var(--text-secondary)' }}>{result.steering}</strong></span>}

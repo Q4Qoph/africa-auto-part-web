@@ -123,7 +123,8 @@ export default function VehiclePartsPage() {
                   {vehicle?.modelDescription || vehicle?.model || 'Vehicle Parts Catalog'}
                 </h1>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10, fontSize: 13 }}>
-                  {vehicle?.modelYear && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Year/Gen: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.modelYear}</strong></span>}
+                  {vehicle?.generationCoverage && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Catalog Coverage: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.generationCoverage}</strong></span>}
+                  {vehicle?.modelYear && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Base Year: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.modelYear}</strong></span>}
                   {vehicle?.series && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Series: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.series}</strong></span>}
                   {vehicle?.engine && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.engine}</strong></span>}
                   {vehicle?.transmission && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.transmission}</strong></span>}
