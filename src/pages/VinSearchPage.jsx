@@ -187,11 +187,13 @@ export default function VinSearchPage() {
               <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 700 }}>
                 {result.make} — {result.modelDescription || result.model}
               </h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, margin: '10px 0 16px', fontSize: 13, color: 'var(--text-muted)' }}>
-                {result.engine && <span>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
-                {result.transmission && <span>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{result.transmission}</strong></span>}
-                {result.steering && <span>Steering: <strong style={{ color: 'var(--text-secondary)' }}>{result.steering}</strong></span>}
-                {result.fuelType && <span>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{result.fuelType}</strong></span>}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '12px 0 16px', fontSize: 13 }}>
+                {result.modelYear && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Year: <strong style={{ color: 'var(--text-secondary)' }}>{result.modelYear}</strong></span>}
+                {result.engine && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
+                {result.transmission && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{result.transmission}</strong></span>}
+                {result.steering && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Drive: <strong style={{ color: 'var(--text-secondary)' }}>{result.steering}</strong></span>}
+                {result.fuelType && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{result.fuelType}</strong></span>}
+                {result.regionalSpec && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Spec: <strong style={{ color: 'var(--text-secondary)' }}>{result.regionalSpec}</strong></span>}
               </div>
               <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20, lineHeight: 1.5 }}>{result.message}</p>
               <button
@@ -221,9 +223,9 @@ export default function VinSearchPage() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 6,
-                  background: 'var(--warning-bg)',
-                  color: 'var(--warning-text)',
-                  border: '1px solid var(--warning-border)',
+                  background: 'rgba(56, 189, 248, 0.15)',
+                  color: '#38bdf8',
+                  border: '1px solid rgba(56, 189, 248, 0.3)',
                   padding: '4px 10px',
                   borderRadius: 6,
                   fontWeight: 700,
@@ -231,18 +233,26 @@ export default function VinSearchPage() {
                   marginBottom: 14,
                 }}
               >
-                ~ Close Batch / Trim Match
+                ✓ Confirmed Model Batch Match (WMI+VDS)
               </div>
               <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 700 }}>
                 {result.make} — {result.modelDescription || result.model}
               </h2>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '12px 0 16px', fontSize: 13 }}>
+                {result.modelYear && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Generation/Year: <strong style={{ color: 'var(--text-secondary)' }}>{result.modelYear}</strong></span>}
+                {result.engine && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
+                {result.transmission && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{result.transmission}</strong></span>}
+                {result.steering && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Drive: <strong style={{ color: 'var(--text-secondary)' }}>{result.steering}</strong></span>}
+                {result.fuelType && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{result.fuelType}</strong></span>}
+                {result.regionalSpec && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Spec: <strong style={{ color: 'var(--text-secondary)' }}>{result.regionalSpec}</strong></span>}
+              </div>
               <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20, lineHeight: 1.5 }}>{result.message}</p>
               {result.vehicleId && (
                 <button
                   onClick={() => handleViewParts()}
                   style={{
                     padding: '11px 22px',
-                    background: '#d97706',
+                    background: '#0284c7',
                     color: '#ffffff',
                     border: 'none',
                     borderRadius: 8,
@@ -253,7 +263,7 @@ export default function VinSearchPage() {
                     transition: 'background-color 0.2s',
                   }}
                 >
-                  View Likely Compatible Parts →
+                  Browse Compatible Parts & Exploded Schematics →
                 </button>
               )}
             </div>

@@ -122,14 +122,19 @@ export default function VehiclePartsPage() {
                 <h1 style={{ margin: '0 0 6px', fontSize: 24, color: 'var(--text-primary)', fontWeight: 700 }}>
                   {vehicle?.modelDescription || vehicle?.model || 'Vehicle Parts Catalog'}
                 </h1>
-                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 14 }}>
-                  Year: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle?.modelYear || 'N/A'}</strong>{' '}
-                  {vehicle?.series ? `| Series: ${vehicle.series}` : ''}
-                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10, fontSize: 13 }}>
+                  {vehicle?.modelYear && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Year/Gen: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.modelYear}</strong></span>}
+                  {vehicle?.series && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Series: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.series}</strong></span>}
+                  {vehicle?.engine && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.engine}</strong></span>}
+                  {vehicle?.transmission && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.transmission}</strong></span>}
+                  {vehicle?.steering && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Drive: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.steering}</strong></span>}
+                  {vehicle?.fuelType && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.fuelType}</strong></span>}
+                  {vehicle?.regionalSpec && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Spec: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.regionalSpec}</strong></span>}
+                </div>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <span style={{ fontSize: 12, color: 'var(--text-muted)', display: 'block', marginBottom: 4, fontWeight: 500 }}>
-                  CONFIRMED VIN
+                  CONFIRMED BATCH / VIN
                 </span>
                 <code
                   style={{
