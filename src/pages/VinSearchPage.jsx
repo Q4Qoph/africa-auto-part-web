@@ -39,30 +39,30 @@ export default function VinSearchPage() {
   }
 
   return (
-    <div style={{ maxWidth: 650, margin: '40px auto', padding: '0 20px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ maxWidth: 680, margin: '48px auto', padding: '0 20px' }}>
       <div style={{ textAlign: 'center', marginBottom: 32 }}>
-        <h1 style={{ fontSize: 32, fontWeight: 800, color: '#0f172a', margin: '0 0 8px' }}>
+        <h1 style={{ fontSize: 32, fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 10px', letterSpacing: '-0.02em' }}>
           AfricaAutoPart Catalog
         </h1>
-        <p style={{ color: '#64748b', fontSize: 16, margin: 0 }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: 16, margin: 0, lineHeight: 1.5 }}>
           Search any 17-digit VIN or East African JDM Chassis Number for confirmed parts & exploded schematics
         </p>
       </div>
 
       <div
         style={{
-          background: '#ffffff',
-          borderRadius: 12,
+          background: 'var(--bg-card)',
+          borderRadius: 14,
           padding: 24,
-          border: '1px solid #e2e8f0',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-md)',
         }}
       >
         <form onSubmit={handleSearch}>
-          <label style={{ display: 'block', fontWeight: 600, color: '#334155', marginBottom: 8, fontSize: 14 }}>
+          <label style={{ display: 'block', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: 8, fontSize: 14 }}>
             Vehicle Identification (VIN or Chassis / Frame Number)
           </label>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ display: 'flex', gap: 10 }}>
             <input
               type="text"
               value={vin}
@@ -72,12 +72,15 @@ export default function VinSearchPage() {
               style={{
                 flex: 1,
                 padding: '12px 16px',
-                fontSize: 16,
+                fontSize: 15,
                 borderRadius: 8,
-                border: '1px solid #cbd5e1',
-                fontFamily: 'monospace',
+                border: '1px solid var(--border-subtle)',
+                background: 'var(--bg-input)',
+                color: 'var(--text-primary)',
+                fontFamily: 'var(--font-mono)',
                 fontWeight: 600,
                 letterSpacing: '0.05em',
+                transition: 'border-color 0.2s, box-shadow 0.2s',
               }}
             />
             <button
@@ -85,14 +88,16 @@ export default function VinSearchPage() {
               disabled={loading}
               style={{
                 padding: '12px 24px',
-                background: '#2563eb',
-                color: '#fff',
+                background: 'var(--primary)',
+                color: '#ffffff',
                 border: 'none',
                 borderRadius: 8,
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: 600,
                 cursor: loading ? 'not-allowed' : 'pointer',
-                transition: 'background 0.2s',
+                opacity: loading ? 0.7 : 1,
+                transition: 'background-color 0.2s, transform 0.1s',
+                whiteSpace: 'nowrap',
               }}
             >
               {loading ? 'Searching...' : 'Search'}
@@ -101,37 +106,50 @@ export default function VinSearchPage() {
         </form>
 
         {/* Quick Sample Chips */}
-        <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 6, fontSize: 13, color: '#64748b' }}>
-          <span>Try samples:</span>
-          <button
-            onClick={() => handleQuickFill('JTEEB71J10F013008')}
-            style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 4, padding: '3px 8px', cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
-          >
-            Toyota Land Cruiser
-          </button>
-          <button
-            onClick={() => handleQuickFill('MALC281CBLM567587')}
-            style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 4, padding: '3px 8px', cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
-          >
-            Hyundai Creta
-          </button>
-          <button
-            onClick={() => handleQuickFill('LGWEEUA50SL614287')}
-            style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 4, padding: '3px 8px', cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
-          >
-            GWM Haval
-          </button>
-          <button
-            onClick={() => handleQuickFill('KDJ120-0012345')}
-            style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 4, padding: '3px 8px', cursor: 'pointer', fontFamily: 'monospace', fontSize: 12 }}
-          >
-            JDM Prado 120
-          </button>
+        <div style={{ marginTop: 18, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, fontSize: 13, color: 'var(--text-muted)' }}>
+          <span style={{ fontWeight: 500 }}>Try samples:</span>
+          {[
+            { label: 'Toyota Land Cruiser', code: 'JTEEB71J10F013008' },
+            { label: 'Hyundai Creta', code: 'MALC281CBLM567587' },
+            { label: 'GWM Haval', code: 'LGWEEUA50SL614287' },
+            { label: 'JDM Prado 120', code: 'KDJ120-0012345' },
+          ].map((sample) => (
+            <button
+              key={sample.code}
+              type="button"
+              onClick={() => handleQuickFill(sample.code)}
+              style={{
+                background: 'var(--chip-bg)',
+                color: 'var(--chip-text)',
+                border: '1px solid var(--chip-border)',
+                borderRadius: 6,
+                padding: '4px 10px',
+                cursor: 'pointer',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 12,
+                fontWeight: 500,
+                transition: 'background-color 0.15s, border-color 0.15s',
+              }}
+            >
+              {sample.label}
+            </button>
+          ))}
         </div>
       </div>
 
       {error && (
-        <div style={{ marginTop: 20, padding: 14, background: '#fee2e2', color: '#b91c1c', borderRadius: 8, fontSize: 14 }}>
+        <div
+          style={{
+            marginTop: 20,
+            padding: '14px 18px',
+            background: 'var(--error-bg)',
+            color: 'var(--error-text)',
+            border: '1px solid var(--error-border)',
+            borderRadius: 10,
+            fontSize: 14,
+            fontWeight: 500,
+          }}
+        >
           {error}
         </div>
       )}
@@ -141,30 +159,55 @@ export default function VinSearchPage() {
           style={{
             marginTop: 24,
             padding: 24,
-            background: '#fff',
-            border: '1px solid #e2e8f0',
-            borderRadius: 12,
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: 14,
+            boxShadow: 'var(--shadow-md)',
           }}
         >
           {result.matchType === 'Exact' && (
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#dcfce7', color: '#15803d', padding: '4px 10px', borderRadius: 6, fontWeight: 700, fontSize: 13, marginBottom: 12 }}>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  background: 'var(--success-bg)',
+                  color: 'var(--success-text)',
+                  border: '1px solid var(--success-border)',
+                  padding: '4px 10px',
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  marginBottom: 14,
+                }}
+              >
                 ✓ Exact Vehicle & VIN Match
               </div>
-              <h2 style={{ margin: '0 0 6px', fontSize: 20, color: '#0f172a' }}>
+              <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 700 }}>
                 {result.make} — {result.modelDescription || result.model}
               </h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, margin: '8px 0 16px', fontSize: 13, color: '#475569' }}>
-                {result.engine && <span>Engine: <strong>{result.engine}</strong></span>}
-                {result.transmission && <span>Transmission: <strong>{result.transmission}</strong></span>}
-                {result.steering && <span>Steering: <strong>{result.steering}</strong></span>}
-                {result.fuelType && <span>Fuel: <strong>{result.fuelType}</strong></span>}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, margin: '10px 0 16px', fontSize: 13, color: 'var(--text-muted)' }}>
+                {result.engine && <span>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
+                {result.transmission && <span>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{result.transmission}</strong></span>}
+                {result.steering && <span>Steering: <strong style={{ color: 'var(--text-secondary)' }}>{result.steering}</strong></span>}
+                {result.fuelType && <span>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{result.fuelType}</strong></span>}
               </div>
-              <p style={{ color: '#64748b', fontSize: 14, marginBottom: 20 }}>{result.message}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20, lineHeight: 1.5 }}>{result.message}</p>
               <button
                 onClick={() => handleViewParts()}
-                style={{ padding: '10px 20px', background: '#16a34a', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 600, cursor: 'pointer', fontSize: 15 }}
+                style={{
+                  padding: '11px 22px',
+                  background: '#16a34a',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  boxShadow: 'var(--shadow-sm)',
+                  transition: 'background-color 0.2s',
+                }}
               >
                 Browse Confirmed Parts & Schematics →
               </button>
@@ -173,17 +216,42 @@ export default function VinSearchPage() {
 
           {result.matchType === 'PrefixMatch' && (
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#fef3c7', color: '#b45309', padding: '4px 10px', borderRadius: 6, fontWeight: 700, fontSize: 13, marginBottom: 12 }}>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  background: 'var(--warning-bg)',
+                  color: 'var(--warning-text)',
+                  border: '1px solid var(--warning-border)',
+                  padding: '4px 10px',
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  marginBottom: 14,
+                }}
+              >
                 ~ Close Batch / Trim Match
               </div>
-              <h2 style={{ margin: '0 0 6px', fontSize: 20, color: '#0f172a' }}>
+              <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 700 }}>
                 {result.make} — {result.modelDescription || result.model}
               </h2>
-              <p style={{ color: '#64748b', fontSize: 14, marginBottom: 20 }}>{result.message}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20, lineHeight: 1.5 }}>{result.message}</p>
               {result.vehicleId && (
                 <button
                   onClick={() => handleViewParts()}
-                  style={{ padding: '10px 20px', background: '#d97706', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 600, cursor: 'pointer', fontSize: 15 }}
+                  style={{
+                    padding: '11px 22px',
+                    background: '#d97706',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: 8,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    fontSize: 15,
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'background-color 0.2s',
+                  }}
                 >
                   View Likely Compatible Parts →
                 </button>
@@ -193,26 +261,51 @@ export default function VinSearchPage() {
 
           {result.matchType === 'JdmFrameMatch' && (
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#e0e7ff', color: '#4338ca', padding: '4px 10px', borderRadius: 6, fontWeight: 700, fontSize: 13, marginBottom: 12 }}>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  background: 'var(--info-bg)',
+                  color: 'var(--info-text)',
+                  border: '1px solid var(--info-border)',
+                  padding: '4px 10px',
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  marginBottom: 14,
+                }}
+              >
                 🇯🇵 JDM Frame Code Recognized
               </div>
-              <h2 style={{ margin: '0 0 6px', fontSize: 20, color: '#0f172a' }}>
+              <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 700 }}>
                 {result.make} — {result.modelDescription}
               </h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, margin: '8px 0 16px', fontSize: 13, color: '#475569' }}>
-                {result.engine && <span>Engine: <strong>{result.engine}</strong></span>}
-                {result.fuelType && <span>Fuel: <strong>{result.fuelType}</strong></span>}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, margin: '10px 0 16px', fontSize: 13, color: 'var(--text-muted)' }}>
+                {result.engine && <span>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
+                {result.fuelType && <span>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{result.fuelType}</strong></span>}
               </div>
-              <p style={{ color: '#64748b', fontSize: 14, marginBottom: 20 }}>{result.message}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20, lineHeight: 1.5 }}>{result.message}</p>
               {result.vehicleId ? (
                 <button
                   onClick={() => handleViewParts()}
-                  style={{ padding: '10px 20px', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 600, cursor: 'pointer', fontSize: 15 }}
+                  style={{
+                    padding: '11px 22px',
+                    background: '#4f46e5',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: 8,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    fontSize: 15,
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'background-color 0.2s',
+                  }}
                 >
                   View Catalog for this Model →
                 </button>
               ) : (
-                <p style={{ fontSize: 13, color: '#6b7280', fontStyle: 'italic' }}>
+                <p style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic', margin: 0 }}>
                   Full OEM EPC part catalog for this JDM frame is scheduled in upcoming data batch.
                 </p>
               )}
@@ -221,19 +314,47 @@ export default function VinSearchPage() {
 
           {result.matchType === 'MakeOnly' && (
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#f1f5f9', color: '#475569', padding: '4px 10px', borderRadius: 6, fontWeight: 700, fontSize: 13, marginBottom: 12 }}>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  background: 'var(--chip-bg)',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border)',
+                  padding: '4px 10px',
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  marginBottom: 12,
+                }}
+              >
                 🏭 Manufacturer Identified: {result.make}
               </div>
-              <p style={{ color: '#64748b', fontSize: 14, margin: '10px 0 0' }}>{result.message}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: 14, margin: '10px 0 0', lineHeight: 1.5 }}>{result.message}</p>
             </div>
           )}
 
           {result.matchType === 'Unrecognized' && (
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#fee2e2', color: '#b91c1c', padding: '4px 10px', borderRadius: 6, fontWeight: 700, fontSize: 13, marginBottom: 12 }}>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  background: 'var(--error-bg)',
+                  color: 'var(--error-text)',
+                  border: '1px solid var(--error-border)',
+                  padding: '4px 10px',
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  marginBottom: 12,
+                }}
+              >
                 ❓ Vehicle Not Recognized Yet
               </div>
-              <p style={{ color: '#64748b', fontSize: 14, margin: '10px 0 0' }}>{result.message}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: 14, margin: '10px 0 0', lineHeight: 1.5 }}>{result.message}</p>
             </div>
           )}
         </div>

@@ -46,21 +46,43 @@ export default function VehiclePartsPage() {
   }
 
   return (
-    <div style={{ maxWidth: 1000, margin: '30px auto', padding: '0 20px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ maxWidth: 1080, margin: '36px auto', padding: '0 20px' }}>
       <div style={{ marginBottom: 20 }}>
-        <Link to="/" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 500 }}>
+        <Link
+          to="/"
+          style={{
+            color: 'var(--primary)',
+            textDecoration: 'none',
+            fontWeight: 600,
+            fontSize: 14,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+          }}
+        >
           ← Back to VIN Search
         </Link>
       </div>
 
       {loading && (
-        <div style={{ padding: 40, textAlign: 'center', color: '#666' }}>
-          <p>Loading vehicle catalog and parts...</p>
+        <div style={{ padding: 48, textAlign: 'center', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: 16 }}>Loading vehicle catalog and parts...</p>
         </div>
       )}
 
       {error && (
-        <div style={{ padding: 16, background: '#fee2e2', color: '#b91c1c', borderRadius: 8, marginBottom: 20 }}>
+        <div
+          style={{
+            padding: '14px 18px',
+            background: 'var(--error-bg)',
+            color: 'var(--error-text)',
+            border: '1px solid var(--error-border)',
+            borderRadius: 10,
+            marginBottom: 20,
+            fontSize: 14,
+            fontWeight: 500,
+          }}
+        >
           {error}
         </div>
       )}
@@ -70,15 +92,15 @@ export default function VehiclePartsPage() {
           {/* Vehicle Metadata Header Card */}
           <div
             style={{
-              background: '#f8fafc',
-              border: '1px solid #e2e8f0',
-              borderRadius: 12,
-              padding: '20px 24px',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              borderRadius: 14,
+              padding: '22px 26px',
               marginBottom: 24,
-              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+              boxShadow: 'var(--shadow-sm)',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
               <div>
                 <span
                   style={{
@@ -86,33 +108,41 @@ export default function VehiclePartsPage() {
                     fontSize: 12,
                     fontWeight: 700,
                     textTransform: 'uppercase',
-                    color: '#2563eb',
-                    background: '#dbeafe',
+                    color: 'var(--primary)',
+                    background: 'var(--primary-bg-subtle)',
+                    border: '1px solid var(--primary-border)',
                     padding: '3px 8px',
                     borderRadius: 4,
-                    marginBottom: 6,
+                    marginBottom: 8,
+                    letterSpacing: '0.04em',
                   }}
                 >
                   {vehicle?.make || 'VEHICLE'}
                 </span>
-                <h1 style={{ margin: '0 0 6px', fontSize: 24, color: '#0f172a' }}>
+                <h1 style={{ margin: '0 0 6px', fontSize: 24, color: 'var(--text-primary)', fontWeight: 700 }}>
                   {vehicle?.modelDescription || vehicle?.model || 'Vehicle Parts Catalog'}
                 </h1>
-                <p style={{ margin: 0, color: '#64748b', fontSize: 14 }}>
-                  Year: <strong>{vehicle?.modelYear || 'N/A'}</strong> {vehicle?.series ? `| Series: ${vehicle.series}` : ''}
+                <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 14 }}>
+                  Year: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle?.modelYear || 'N/A'}</strong>{' '}
+                  {vehicle?.series ? `| Series: ${vehicle.series}` : ''}
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: 12, color: '#64748b', display: 'block' }}>CONFIRMED VIN</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)', display: 'block', marginBottom: 4, fontWeight: 500 }}>
+                  CONFIRMED VIN
+                </span>
                 <code
                   style={{
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: 700,
-                    background: '#1e293b',
+                    background: 'var(--bg-card-subtle)',
                     color: '#38bdf8',
+                    border: '1px solid var(--border)',
                     padding: '6px 12px',
                     borderRadius: 6,
-                    letterSpacing: '0.05em',
+                    letterSpacing: '0.06em',
+                    fontFamily: 'var(--font-mono)',
+                    display: 'inline-block',
                   }}
                 >
                   {vehicle?.vin}
@@ -128,75 +158,87 @@ export default function VehiclePartsPage() {
               justifyContent: 'space-between',
               alignItems: 'center',
               flexWrap: 'wrap',
-              gap: 12,
+              gap: 14,
               marginBottom: 16,
             }}
           >
-            <div style={{ color: '#475569', fontSize: 14 }}>
-              Showing <strong>{parts.length}</strong> of <strong>{data.totalCount}</strong> parts (Page {data.page} of {data.totalPages || 1})
+            <div style={{ color: 'var(--text-muted)', fontSize: 14 }}>
+              Showing <strong style={{ color: 'var(--text-secondary)' }}>{parts.length}</strong> of{' '}
+              <strong style={{ color: 'var(--text-secondary)' }}>{data.totalCount}</strong> parts (Page {data.page} of {data.totalPages || 1})
             </div>
             <input
               type="text"
-              placeholder="Search by part number, name, or group across all pages..."
+              placeholder="Search by part number, name, or group..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
-                padding: '8px 12px',
-                borderRadius: 6,
-                border: '1px solid #cbd5e1',
-                width: 380,
+                padding: '10px 14px',
+                borderRadius: 8,
+                border: '1px solid var(--border-subtle)',
+                background: 'var(--bg-input)',
+                color: 'var(--text-primary)',
+                width: 360,
                 fontSize: 14,
+                boxShadow: 'var(--shadow-sm)',
               }}
             />
           </div>
 
           {/* Parts Catalog Table */}
-          <div style={{ overflowX: 'auto', border: '1px solid #e2e8f0', borderRadius: 8 }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14, background: '#fff' }}>
+          <div style={{ overflowX: 'auto', border: '1px solid var(--table-border)', borderRadius: 10, boxShadow: 'var(--shadow-sm)' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14, background: 'var(--bg-card)' }}>
               <thead>
-                <tr style={{ background: '#f1f5f9', borderBottom: '2px solid #cbd5e1', textAlign: 'left' }}>
-                  <th style={{ padding: '12px 14px', color: '#334155' }}>Part Number</th>
-                  <th style={{ padding: '12px 14px', color: '#334155' }}>Description</th>
-                  <th style={{ padding: '12px 14px', color: '#334155' }}>Group / Subgroup</th>
-                  <th style={{ padding: '12px 14px', color: '#334155', textAlign: 'center' }}>Qty</th>
-                  <th style={{ padding: '12px 14px', color: '#334155' }}>Price & Availability</th>
-                  <th style={{ padding: '12px 14px', color: '#334155', textAlign: 'center' }}>Schematic</th>
+                <tr style={{ background: 'var(--table-head-bg)', borderBottom: '2px solid var(--table-border)', textAlign: 'left' }}>
+                  <th style={{ padding: '12px 14px', color: 'var(--text-secondary)', fontWeight: 600 }}>Part Number</th>
+                  <th style={{ padding: '12px 14px', color: 'var(--text-secondary)', fontWeight: 600 }}>Description</th>
+                  <th style={{ padding: '12px 14px', color: 'var(--text-secondary)', fontWeight: 600 }}>Group / Subgroup</th>
+                  <th style={{ padding: '12px 14px', color: 'var(--text-secondary)', fontWeight: 600, textAlign: 'center' }}>Qty</th>
+                  <th style={{ padding: '12px 14px', color: 'var(--text-secondary)', fontWeight: 600 }}>Price & Availability</th>
+                  <th style={{ padding: '12px 14px', color: 'var(--text-secondary)', fontWeight: 600, textAlign: 'center' }}>Schematic</th>
                 </tr>
               </thead>
               <tbody>
                 {parts.map((part, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid #f1f5f9', transition: 'background 0.15s' }}>
-                    <td style={{ padding: '12px 14px', fontFamily: 'monospace', fontWeight: 600, color: '#0f172a' }}>
-                      {part.partNumber || <span style={{ color: '#94a3b8' }}>—</span>}
+                  <tr
+                    key={i}
+                    style={{
+                      borderBottom: '1px solid var(--table-border)',
+                      transition: 'background 0.15s',
+                    }}
+                  >
+                    <td style={{ padding: '12px 14px', fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-primary)' }}>
+                      {part.partNumber || <span style={{ color: 'var(--text-muted)' }}>—</span>}
                     </td>
                     <td style={{ padding: '12px 14px' }}>
-                      <div style={{ fontWeight: 500, color: '#1e293b' }}>{part.partName}</div>
+                      <div style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{part.partName}</div>
                       {part.partNameOriginal && part.partNameOriginal !== part.partName && (
-                        <div style={{ fontSize: 12, color: '#64748b' }}>Original: {part.partNameOriginal}</div>
+                        <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>Original: {part.partNameOriginal}</div>
                       )}
                     </td>
-                    <td style={{ padding: '12px 14px', color: '#475569' }}>
+                    <td style={{ padding: '12px 14px', color: 'var(--text-secondary)' }}>
                       <div>{part.groupName || '—'}</div>
-                      {part.subGroupName && <div style={{ fontSize: 12, color: '#94a3b8' }}>{part.subGroupName}</div>}
+                      {part.subGroupName && <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{part.subGroupName}</div>}
                     </td>
-                    <td style={{ padding: '12px 14px', textAlign: 'center', color: '#334155' }}>
+                    <td style={{ padding: '12px 14px', textAlign: 'center', color: 'var(--text-secondary)' }}>
                       {part.quantity}
                     </td>
                     <td style={{ padding: '12px 14px' }}>
                       {part.price != null ? (
                         <div>
-                          <span style={{ fontWeight: 700, color: '#15803d', fontSize: 15 }}>
+                          <span style={{ fontWeight: 700, color: 'var(--success-text)', fontSize: 15 }}>
                             {part.currency || 'USD'} {Number(part.price).toFixed(2)}
                           </span>
                           {part.origin && (
                             <span
                               style={{
                                 display: 'inline-block',
-                                marginLeft: 6,
+                                marginLeft: 8,
                                 fontSize: 11,
+                                fontWeight: 600,
                                 padding: '2px 6px',
-                                background: '#dcfce7',
-                                color: '#166534',
+                                background: 'var(--success-bg)',
+                                color: 'var(--success-text)',
+                                border: '1px solid var(--success-border)',
                                 borderRadius: 4,
                               }}
                             >
@@ -205,18 +247,19 @@ export default function VehiclePartsPage() {
                           )}
                         </div>
                       ) : (
-                        <span style={{ color: '#94a3b8', fontSize: 13 }}>Quote on Request</span>
+                        <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>Quote on Request</span>
                       )}
                     </td>
                     <td style={{ padding: '12px 14px', textAlign: 'center' }}>
                       {part.picId ? (
                         <button
+                          type="button"
                           onClick={() => openDiagram(part)}
                           style={{
-                            padding: '6px 10px',
-                            background: '#eff6ff',
-                            color: '#1d4ed8',
-                            border: '1px solid #bfdbfe',
+                            padding: '6px 12px',
+                            background: 'var(--primary-bg-subtle)',
+                            color: 'var(--primary)',
+                            border: '1px solid var(--primary-border)',
                             borderRadius: 6,
                             cursor: 'pointer',
                             fontSize: 12,
@@ -224,12 +267,13 @@ export default function VehiclePartsPage() {
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: 4,
+                            transition: 'background-color 0.15s',
                           }}
                         >
                           🖼️ View #{part.picId}
                         </button>
                       ) : (
-                        <span style={{ color: '#cbd5e1' }}>—</span>
+                        <span style={{ color: 'var(--text-muted)' }}>—</span>
                       )}
                     </td>
                   </tr>
@@ -241,34 +285,41 @@ export default function VehiclePartsPage() {
           {/* Pagination Controls */}
           <div style={{ marginTop: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <button
+              type="button"
               disabled={page <= 1}
               onClick={() => setPage((p) => p - 1)}
               style={{
                 padding: '8px 16px',
                 borderRadius: 6,
-                border: '1px solid #cbd5e1',
-                background: page <= 1 ? '#f1f5f9' : '#fff',
+                border: '1px solid var(--border)',
+                background: page <= 1 ? 'var(--bg-card-subtle)' : 'var(--bg-card)',
                 cursor: page <= 1 ? 'not-allowed' : 'pointer',
-                color: page <= 1 ? '#94a3b8' : '#334155',
+                color: page <= 1 ? 'var(--text-muted)' : 'var(--text-primary)',
                 fontWeight: 500,
+                fontSize: 14,
+                transition: 'background-color 0.15s',
               }}
             >
               ← Previous Page
             </button>
-            <span style={{ color: '#64748b', fontSize: 14 }}>
-              Page <strong>{page}</strong> of <strong>{data.totalPages}</strong>
+            <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>
+              Page <strong style={{ color: 'var(--text-secondary)' }}>{page}</strong> of{' '}
+              <strong style={{ color: 'var(--text-secondary)' }}>{data.totalPages}</strong>
             </span>
             <button
+              type="button"
               disabled={page >= data.totalPages}
               onClick={() => setPage((p) => p + 1)}
               style={{
                 padding: '8px 16px',
                 borderRadius: 6,
-                border: '1px solid #cbd5e1',
-                background: page >= data.totalPages ? '#f1f5f9' : '#fff',
+                border: '1px solid var(--border)',
+                background: page >= data.totalPages ? 'var(--bg-card-subtle)' : 'var(--bg-card)',
                 cursor: page >= data.totalPages ? 'not-allowed' : 'pointer',
-                color: page >= data.totalPages ? '#94a3b8' : '#334155',
+                color: page >= data.totalPages ? 'var(--text-muted)' : 'var(--text-primary)',
                 fontWeight: 500,
+                fontSize: 14,
+                transition: 'background-color 0.15s',
               }}
             >
               Next Page →
@@ -284,7 +335,7 @@ export default function VehiclePartsPage() {
           style={{
             position: 'fixed',
             inset: 0,
-            backgroundColor: 'rgba(15, 23, 42, 0.75)',
+            backgroundColor: 'var(--modal-overlay)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -296,45 +347,47 @@ export default function VehiclePartsPage() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              backgroundColor: '#fff',
-              borderRadius: 12,
+              backgroundColor: 'var(--bg-card)',
+              borderRadius: 14,
               maxWidth: 900,
               width: '100%',
               maxHeight: '90vh',
               display: 'flex',
               flexDirection: 'column',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2)',
+              boxShadow: 'var(--shadow-xl)',
+              border: '1px solid var(--border)',
               overflow: 'hidden',
             }}
           >
             {/* Modal Header */}
             <div
               style={{
-                padding: '16px 20px',
-                borderBottom: '1px solid #e2e8f0',
+                padding: '16px 22px',
+                borderBottom: '1px solid var(--border)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                background: '#f8fafc',
+                background: 'var(--table-head-bg)',
               }}
             >
               <div>
-                <h3 style={{ margin: 0, fontSize: 16, color: '#0f172a' }}>
+                <h3 style={{ margin: 0, fontSize: 16, color: 'var(--text-primary)', fontWeight: 700 }}>
                   Exploded Assembly Schematic (Pic #{activeDiagram.picId})
                 </h3>
-                <p style={{ margin: '2px 0 0', fontSize: 13, color: '#64748b' }}>
+                <p style={{ margin: '3px 0 0', fontSize: 13, color: 'var(--text-muted)' }}>
                   {activeDiagram.partNumber ? `Part PN: ${activeDiagram.partNumber} — ` : ''}
                   {activeDiagram.partName}
                 </p>
               </div>
               <button
+                type="button"
                 onClick={() => setActiveDiagram(null)}
                 style={{
                   background: 'none',
                   border: 'none',
-                  fontSize: 22,
+                  fontSize: 20,
                   cursor: 'pointer',
-                  color: '#64748b',
+                  color: 'var(--text-muted)',
                   padding: '4px 8px',
                 }}
               >
@@ -350,7 +403,7 @@ export default function VehiclePartsPage() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: '#ffffff',
+                background: '#ffffff', // Keep technical schematic canvas crisp white
                 minHeight: 350,
               }}
             >
@@ -361,7 +414,6 @@ export default function VehiclePartsPage() {
                   maxWidth: '100%',
                   maxHeight: '65vh',
                   objectFit: 'contain',
-                  border: '1px solid #f1f5f9',
                   borderRadius: 4,
                 }}
                 onError={(e) => {
@@ -379,33 +431,34 @@ export default function VehiclePartsPage() {
             {/* Modal Footer */}
             <div
               style={{
-                padding: '12px 20px',
-                borderTop: '1px solid #e2e8f0',
+                padding: '14px 22px',
+                borderTop: '1px solid var(--border)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                background: '#f8fafc',
+                background: 'var(--table-head-bg)',
               }}
             >
               <a
                 href={activeDiagram.url}
                 target="_blank"
                 rel="noreferrer"
-                style={{ color: '#2563eb', fontSize: 13, textDecoration: 'none', fontWeight: 500 }}
+                style={{ color: 'var(--primary)', fontSize: 13, textDecoration: 'none', fontWeight: 600 }}
               >
                 Open Full Resolution in New Tab ↗
               </a>
               <button
+                type="button"
                 onClick={() => setActiveDiagram(null)}
                 style={{
-                  padding: '6px 14px',
-                  background: '#0f172a',
-                  color: '#fff',
+                  padding: '8px 16px',
+                  background: 'var(--primary)',
+                  color: '#ffffff',
                   border: 'none',
                   borderRadius: 6,
                   cursor: 'pointer',
                   fontSize: 13,
-                  fontWeight: 500,
+                  fontWeight: 600,
                 }}
               >
                 Close
