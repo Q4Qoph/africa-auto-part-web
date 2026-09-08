@@ -120,7 +120,7 @@ export default function VehiclePartsPage() {
                   {vehicle?.make || 'VEHICLE'}
                 </span>
                 <h1 style={{ margin: '0 0 6px', fontSize: 24, color: 'var(--text-primary)', fontWeight: 700 }}>
-                  {vehicle?.modelDescription || vehicle?.model || 'Vehicle Parts Catalog'}
+                  {vehicle?.displayTitle || (vehicle?.cleanModel ? `${vehicle?.make} — ${vehicle?.cleanModel}` : vehicle?.modelDescription || vehicle?.model || 'Vehicle Parts Catalog')}
                 </h1>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10, fontSize: 13 }}>
                   {vehicle?.generationCoverage && <span style={{ background: 'var(--chip-bg)', padding: '3px 8px', borderRadius: 4, border: '1px solid var(--border)' }}>Catalog Coverage: <strong style={{ color: 'var(--text-secondary)' }}>{vehicle.generationCoverage}</strong></span>}

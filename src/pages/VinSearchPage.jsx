@@ -165,160 +165,193 @@ export default function VinSearchPage() {
             boxShadow: 'var(--shadow-md)',
           }}
         >
-          {result.matchType === 'Exact' && (
+          {(result.matchType === 'Exact' || result.matchType === 'PrefixMatch' || result.matchType === 'JdmFrameMatch') && (
             <div>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  background: 'var(--success-bg)',
-                  color: 'var(--success-text)',
-                  border: '1px solid var(--success-border)',
-                  padding: '4px 10px',
-                  borderRadius: 6,
-                  fontWeight: 700,
-                  fontSize: 13,
-                  marginBottom: 14,
-                }}
-              >
-                ✓ Exact Vehicle & VIN Match
-              </div>
-              <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 700 }}>
-                {result.make} — {result.modelDescription || result.model}
-              </h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '12px 0 16px', fontSize: 13 }}>
-                {result.decodedVehicleYear && <span style={{ background: 'rgba(34, 197, 94, 0.15)', color: '#22c55e', padding: '4px 8px', borderRadius: 6, border: '1px solid rgba(34, 197, 94, 0.3)', fontWeight: 600 }}>Vehicle Year: {result.decodedVehicleYear}</span>}
-                {result.generationCoverage && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Catalog Coverage: <strong style={{ color: 'var(--text-secondary)' }}>{result.generationCoverage}</strong></span>}
-                {result.engine && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
-                {result.transmission && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{result.transmission}</strong></span>}
-                {result.steering && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Drive: <strong style={{ color: 'var(--text-secondary)' }}>{result.steering}</strong></span>}
-                {result.fuelType && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{result.fuelType}</strong></span>}
-                {result.regionalSpec && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Spec: <strong style={{ color: 'var(--text-secondary)' }}>{result.regionalSpec}</strong></span>}
-              </div>
-              <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20, lineHeight: 1.5 }}>{result.message}</p>
-              <button
-                onClick={() => handleViewParts()}
-                style={{
-                  padding: '11px 22px',
-                  background: '#16a34a',
-                  color: '#ffffff',
-                  border: 'none',
-                  borderRadius: 8,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  fontSize: 15,
-                  boxShadow: 'var(--shadow-sm)',
-                  transition: 'background-color 0.2s',
-                }}
-              >
-                Browse Confirmed Parts & Schematics →
-              </button>
-            </div>
-          )}
+              {/* Header Badges */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10, marginBottom: 14 }}>
+                {result.matchType === 'Exact' && (
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      background: 'var(--success-bg)',
+                      color: 'var(--success-text)',
+                      border: '1px solid var(--success-border)',
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      fontWeight: 700,
+                      fontSize: 13,
+                    }}
+                  >
+                    ✓ 100% Exact Vehicle & VIN Match
+                  </span>
+                )}
+                {result.matchType === 'PrefixMatch' && (
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      background: 'rgba(56, 189, 248, 0.15)',
+                      color: '#38bdf8',
+                      border: '1px solid rgba(56, 189, 248, 0.3)',
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      fontWeight: 700,
+                      fontSize: 13,
+                    }}
+                  >
+                    ✓ {Math.round((result.confidenceScore || 0.94) * 100)}% Confirmed Batch Match (WMI+VDS)
+                  </span>
+                )}
+                {result.matchType === 'JdmFrameMatch' && (
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      background: 'var(--info-bg)',
+                      color: 'var(--info-text)',
+                      border: '1px solid var(--info-border)',
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      fontWeight: 700,
+                      fontSize: 13,
+                    }}
+                  >
+                    🇯🇵 JDM Frame Code Recognized
+                  </span>
+                )}
 
-          {result.matchType === 'PrefixMatch' && (
-            <div>
+                {result.catalogMatchKey && (
+                  <span
+                    style={{
+                      background: 'var(--chip-bg)',
+                      color: 'var(--text-secondary)',
+                      padding: '3px 8px',
+                      borderRadius: 6,
+                      border: '1px solid var(--border)',
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 12,
+                      fontWeight: 600,
+                    }}
+                  >
+                    Catalog Match Key: {result.catalogMatchKey}
+                  </span>
+                )}
+              </div>
+
+              {/* Title */}
+              <h2 style={{ margin: '0 0 6px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 800 }}>
+                {result.displayTitle || (result.cleanModel ? `${result.make} — ${result.cleanModel}` : `${result.make} — ${result.model}`)}
+                {result.chassisCode && !result.displayTitle?.includes(result.chassisCode) && (
+                  <span style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-muted)', marginLeft: 8 }}>
+                    ({result.chassisCode})
+                  </span>
+                )}
+              </h2>
+
+              <p style={{ color: 'var(--text-muted)', fontSize: 13, margin: '0 0 16px', lineHeight: 1.5 }}>
+                {result.message}
+              </p>
+
+              {/* Structured OEM Build Sheet Table */}
               <div
                 style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  background: 'rgba(56, 189, 248, 0.15)',
-                  color: '#38bdf8',
-                  border: '1px solid rgba(56, 189, 248, 0.3)',
-                  padding: '4px 10px',
-                  borderRadius: 6,
-                  fontWeight: 700,
-                  fontSize: 13,
-                  marginBottom: 14,
+                  background: 'var(--bg-input)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 10,
+                  overflow: 'hidden',
+                  marginBottom: 20,
                 }}
               >
-                ✓ Confirmed Model Batch Match (WMI+VDS)
-              </div>
-              <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 700 }}>
-                {result.make} — {result.modelDescription || result.model}
-              </h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, margin: '12px 0 16px', fontSize: 13 }}>
-                {result.decodedVehicleYear && <span style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8', padding: '4px 8px', borderRadius: 6, border: '1px solid rgba(56, 189, 248, 0.3)', fontWeight: 600 }}>Vehicle Year: {result.decodedVehicleYear}</span>}
-                {result.generationCoverage && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Catalog Coverage: <strong style={{ color: 'var(--text-secondary)' }}>{result.generationCoverage}</strong></span>}
-                {result.engine && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
-                {result.transmission && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Transmission: <strong style={{ color: 'var(--text-secondary)' }}>{result.transmission}</strong></span>}
-                {result.steering && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Drive: <strong style={{ color: 'var(--text-secondary)' }}>{result.steering}</strong></span>}
-                {result.fuelType && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{result.fuelType}</strong></span>}
-                {result.regionalSpec && <span style={{ background: 'var(--chip-bg)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>Spec: <strong style={{ color: 'var(--text-secondary)' }}>{result.regionalSpec}</strong></span>}
-              </div>
-              <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20, lineHeight: 1.5 }}>{result.message}</p>
-              {result.vehicleId && (
-                <button
-                  onClick={() => handleViewParts()}
+                <div
                   style={{
-                    padding: '11px 22px',
-                    background: '#0284c7',
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: 8,
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    fontSize: 15,
-                    boxShadow: 'var(--shadow-sm)',
-                    transition: 'background-color 0.2s',
+                    padding: '10px 14px',
+                    background: 'var(--chip-bg)',
+                    borderBottom: '1px solid var(--border)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
                   }}
                 >
-                  Browse Compatible Parts & Exploded Schematics →
-                </button>
-              )}
-            </div>
-          )}
+                  <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
+                    OEM Vehicle Specifications Build Sheet
+                  </span>
+                  {result.decodedVehicleYear && (
+                    <span style={{ fontSize: 12, fontWeight: 600, color: '#16a34a' }}>
+                      Decoded Year: {result.decodedVehicleYear}
+                    </span>
+                  )}
+                </div>
 
-          {result.matchType === 'JdmFrameMatch' && (
-            <div>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 6,
-                  background: 'var(--info-bg)',
-                  color: 'var(--info-text)',
-                  border: '1px solid var(--info-border)',
-                  padding: '4px 10px',
-                  borderRadius: 6,
-                  fontWeight: 700,
-                  fontSize: 13,
-                  marginBottom: 14,
-                }}
-              >
-                🇯🇵 JDM Frame Code Recognized
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1px', background: 'var(--border)' }}>
+                  {[
+                    { label: 'Chassis / Frame Code', value: result.chassisCode || result.catalogMatchKey },
+                    { label: 'Body Style', value: result.bodyType || 'Standard Body' },
+                    { label: 'Engine & Displacement', value: result.engine },
+                    { label: 'Transmission', value: result.transmission },
+                    { label: 'Drivetrain', value: result.drivetrain },
+                    { label: 'Steering Configuration', value: result.steering },
+                    { label: 'Fuel Type', value: result.fuelType },
+                    { label: 'Regional Market Spec', value: result.regionalSpec },
+                    { label: 'Applicable Production Range', value: result.applicableRange || result.generationCoverage },
+                    { label: 'Parts Catalogue Search Key', value: result.epcSearchKey, isMono: true },
+                  ]
+                    .filter((item) => item.value)
+                    .map((item, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          padding: '10px 14px',
+                          background: 'var(--bg-card)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 3,
+                        }}
+                      >
+                        <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                          {item.label}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: 13,
+                            fontWeight: item.isMono ? 700 : 500,
+                            color: item.isMono ? 'var(--primary)' : 'var(--text-primary)',
+                            fontFamily: item.isMono ? 'var(--font-mono)' : 'inherit',
+                            wordBreak: 'break-word',
+                          }}
+                        >
+                          {item.value}
+                        </span>
+                      </div>
+                    ))}
+                </div>
               </div>
-              <h2 style={{ margin: '0 0 8px', fontSize: 22, color: 'var(--text-primary)', fontWeight: 700 }}>
-                {result.make} — {result.modelDescription}
-              </h2>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, margin: '10px 0 16px', fontSize: 13, color: 'var(--text-muted)' }}>
-                {result.engine && <span>Engine: <strong style={{ color: 'var(--text-secondary)' }}>{result.engine}</strong></span>}
-                {result.fuelType && <span>Fuel: <strong style={{ color: 'var(--text-secondary)' }}>{result.fuelType}</strong></span>}
-              </div>
-              <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 20, lineHeight: 1.5 }}>{result.message}</p>
+
+              {/* Action Button */}
               {result.vehicleId ? (
                 <button
                   onClick={() => handleViewParts()}
                   style={{
-                    padding: '11px 22px',
-                    background: '#4f46e5',
+                    padding: '12px 24px',
+                    background: result.matchType === 'Exact' ? '#16a34a' : '#0284c7',
                     color: '#ffffff',
                     border: 'none',
                     borderRadius: 8,
-                    fontWeight: 600,
+                    fontWeight: 700,
                     cursor: 'pointer',
                     fontSize: 15,
                     boxShadow: 'var(--shadow-sm)',
-                    transition: 'background-color 0.2s',
+                    transition: 'background-color 0.2s, transform 0.1s',
                   }}
                 >
-                  View Catalog for this Model →
+                  Browse Confirmed Parts & Exploded Schematics →
                 </button>
               ) : (
                 <p style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic', margin: 0 }}>
-                  Full OEM EPC part catalog for this JDM frame is scheduled in upcoming data batch.
+                  Full OEM EPC part catalog for this model is scheduled in upcoming data batch.
                 </p>
               )}
             </div>
